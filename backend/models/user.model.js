@@ -1,31 +1,6 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const categorySchema = new Schema(
-    {
-        name: {
-            type: String,
-            unique: true
-        }
-    }
-);
-
-const goalSchema = new Schema(
-    {
-        name: {
-            type: String,
-            unique: true
-        },
-        category: {
-            type: Schema.Types.ObjectId,
-            ref: 'categorySchema'            
-        },
-        unit: {
-            type: String,
-        }
-    }
-);
-
 const userSchema = new Schema(
     {
         username: {
@@ -42,8 +17,6 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
-        categories: [categorySchema],
-        goals: [goalSchema]
     },
     {
         timestamps: true

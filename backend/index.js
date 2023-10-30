@@ -1,6 +1,6 @@
 import express from "express";
 import { PORT, mongodbURL } from "./config.js";
-import userRouter from "./routes/userRoute.js";
+import authRouter from "./routes/auth.route.js";
 import mongoose from "mongoose";
 
 
@@ -19,8 +19,8 @@ app.get('/', (request, response) => {
     return response.status(234).send('Daily A');
 });
 
-app.use('/test', userRouter)
-app.use('/auth', userRouter)
+app.use('/test', authRouter)
+app.use('/auth', authRouter)
 
 // mongoose handles DB connection, only listens on port if DB connection succeeds
 mongoose
