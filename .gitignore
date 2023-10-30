@@ -2,4 +2,4 @@
 .env
 
 # ignore config file as it contains secrets
-backend/config.js
+/backend/config.js
