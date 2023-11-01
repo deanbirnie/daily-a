@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+const goalSchema = new Schema({
+    category: String,
+    title: String,
+    description: String,
+    unit: String,
+    completionBool: Boolean
+});
+
 const userSchema = new Schema(
     {
         username: {
@@ -17,6 +25,7 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
+        goals: [goalSchema]
     },
     {
         timestamps: true
