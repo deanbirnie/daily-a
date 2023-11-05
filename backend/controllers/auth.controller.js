@@ -61,7 +61,7 @@ export const signIn = async (request, response) => {
         if (!isValidPassword) return response.status(400).send({
             error: "Incorrect user credentials."
         });
-        const userToken = jwt.sign({ id: isValidUser._id }, JWT_SECRET);
+        const userToken = jwt.sign({ id: isValidUser._id.toString() }, JWT_SECRET);
         // destructuring to remove password hash so it is not returned in response
         const { passwordHash: passwdHash, ...userInfo } = isValidUser._doc;
         response

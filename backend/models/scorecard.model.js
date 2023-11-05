@@ -14,4 +14,4 @@ const scorecardSchema = new Schema({
     timestamps: true
 });
 
-export const UserScorecard = mongoose.model('scorecards', scorecardSchema);
+export const scorecard = mongoose.model('scorecards', scorecardSchema);
