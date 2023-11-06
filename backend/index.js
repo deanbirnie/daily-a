@@ -32,6 +32,17 @@ app.use('/api/auth', authRouter);
 // goals routes
 app.use("/api/goals", goalsRouter);
 
+// middleware for handling errors
+app.use((error, request, response, next) => {
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'Internal server error.';
+    return response.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
+
 // mongoose handles DB connection, only listens on port if DB connection succeeds
 mongoose
     .connect(mongodbURL)
