@@ -5,7 +5,7 @@ import { JWT_SECRET } from "../app.config.js";
 // import { check, validationResult } from "express-validator";
 
 
-export const registerUser = async (request, response) => {
+export const registerUser = async (request, response, next) => {
     try {
         const { username, email, password } = request.body;
         if (
@@ -27,7 +27,6 @@ export const registerUser = async (request, response) => {
         });
 
         await newUser.save();
-        
         return response.status(201).send({ message: 'Successfully registered. Please log in.' });
     } catch (error) {
         if (error.code && error.code === 11000) { // Check for duplication error
@@ -38,12 +37,11 @@ export const registerUser = async (request, response) => {
                 return response.status(400).send({ error: "Email address already registered. Use 'reset password' if you are unable to login." });
             }
         }
-        console.log(error.message);
-        response.status(500).send({error: error.message});
+        next(error);
     }
 };
 
-export const signIn = async (request, response) => {
+export const signIn = async (request, response, next) => {
     const { email, password } = request.body;
     try {
         if (!email ||
@@ -69,19 +67,15 @@ export const signIn = async (request, response) => {
             .status(200)
             .json(userInfo);
     } catch (error) {
-        response.status(500).send({error: "Unable to sign you in."});
-        console.log(error.message);
-        response.status(500).send({error: error.message});
+        next(error);
     }
 };
 
-export const signOut = async (request, response) => {
+export const signOut = async (request, response, next) => {
     try {
         response.clearCookie("access_token");
         response.status(200).json("User has been logged out.");
     } catch (error) {
-        response.status(500).send({error: "An error has occurred."});
-        console.log(error.message);
-        response.status(500).send({error: error.message});
+        next(error);
     }
 };
