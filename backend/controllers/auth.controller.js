@@ -2,41 +2,22 @@ import bcrypt from "bcryptjs";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../app.config.js";
-// import { check, validationResult } from "express-validator";
+import { errorHandler } from '../errors/error.js';
 
 
 export const registerUser = async (request, response, next) => {
-    try {
-        const { username, email, password } = request.body;
-        if (
-            !username ||
-            !email ||
-            !password
-        ) {
-            return response.status(400).send({
-                error: 'Required field missing, please provide username, email and password.'
-            })
-        };
+    const { username, email, password } = request.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({
-            username,
-            email,
-            passwordHash: hashedPassword
-        });
-
+    const newUser = new User({
+        username,
+        email,
+        passwordHash: hashedPassword
+    });
+    try{
         await newUser.save();
-        return response.status(201).send({ message: 'Successfully registered. Please log in.' });
+        response.status(201).json('User successfully registered.');
     } catch (error) {
-        if (error.code && error.code === 11000) { // Check for duplication error
-            if (error.keyPattern && error.keyPattern.username) {
-                return response.status(400).send({ error: "Username already taken." });
-            }
-            if (error.keyPattern && error.keyPattern.email) {
-                return response.status(400).send({ error: "Email address already registered. Use 'reset password' if you are unable to login." });
-            }
-        }
         next(error);
     }
 };
@@ -44,21 +25,11 @@ export const registerUser = async (request, response, next) => {
 export const signIn = async (request, response, next) => {
     const { email, password } = request.body;
     try {
-        if (!email ||
-            !password
-        ) {
-            return response.status(400).send({
-                error: "Required field missing."
-            })
-        };
+        
         const isValidUser = await User.findOne({ email });
-        if (!isValidUser) return response.status(400).send({
-            error: "Incorrect user credentials."
-        });
+        if (!isValidUser) return next(errorHandler(404, 'User not found.'));
         const isValidPassword = bcrypt.compareSync(password, isValidUser.passwordHash);
-        if (!isValidPassword) return response.status(400).send({
-            error: "Incorrect user credentials."
-        });
+        if (!isValidPassword) return next(errorHandler(401, 'Incorrect email or password.'));
         const userToken = jwt.sign({ id: isValidUser._id.toString() }, JWT_SECRET);
         // destructuring to remove password hash so it is not returned in response
         const { passwordHash: passwdHash, ...userInfo } = isValidUser._doc;
@@ -73,7 +44,7 @@ export const signIn = async (request, response, next) => {
 
 export const signOut = async (request, response, next) => {
     try {
-        response.clearCookie("access_token");
+        response.clearCookie('access_token');
         response.status(200).json("User has been logged out.");
     } catch (error) {
         next(error);
