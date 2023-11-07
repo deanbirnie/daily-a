@@ -36,7 +36,7 @@ export default function Signin() {
                 return;
             }
             dispatch(signInSuccess(data));
-            navigate('/');
+            navigate('/daily-card');
         } catch (error) {
             dispatch(signInFailure(error.message));
         }

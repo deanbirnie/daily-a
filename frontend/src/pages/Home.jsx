@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div>Home</div>
+    <div>Landing Page</div>
   )
 }

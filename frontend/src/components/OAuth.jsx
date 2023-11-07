@@ -26,7 +26,7 @@ export default function OAuth() {
             });
             const data = await response.json();
             dispatch(signInSuccess(data));
-            navigate('/');
+            navigate('/daily-card');
         } catch (error) {
         console.log('Could not sign in with Google.', error);
         }
