@@ -37,9 +37,6 @@ export default function Profile() {
             <form className='flex flex-col gap-4'>
                 <button onClick={handleSignOut} className='bg-red-700 uppercase text-white p-3 mt-7 rounded-lg text-center hover:opacity-90'>Sign Out</button>
             </form>
-            {/* <div className='flex mt-5'>
-                <span className='text-red-700 cursor-pointer'>Sign Out</span>
-            </div> */}
         </div>
     )
 };

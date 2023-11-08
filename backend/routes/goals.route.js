@@ -7,5 +7,6 @@ const router = express.Router();
 router.get("/get-goals/:userID", tokenVerification, getGoals); // used for viewing all goals by category
 router.post("/create-goal/:userID", tokenVerification, createGoal);
 router.delete("/delete-goal/:userID/:goalID", tokenVerification, deleteGoal);
+// router.post("/update-goal/:userID/:goalID", tokenVerification, updateGoal)
 
 export default router;

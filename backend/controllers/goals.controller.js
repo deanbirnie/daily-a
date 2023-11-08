@@ -1,8 +1,9 @@
 // import { scorecard } from "../models/scorecard.model.js";
 import { User } from "../models/user.model.js";
+import { errorHandler } from "../errors/error.js";
 
 
-export const getGoals = async (request, response) => {
+export const getGoals = async (request, response, next) => {
     const userID = request.params.userID;
 
     console.log("Token User ID: ", request.user.id);
@@ -26,10 +27,7 @@ export const getGoals = async (request, response) => {
             goals: user.goals
         });
     } catch (error) {
-        response.status(500).send({
-            error: "Error occurred while retrieving goals: " + error.message
-        });
-        console.log(error.message);
+        next(error);
     }
 };
 
@@ -56,14 +54,11 @@ export const createGoal = async (request, response) => {
             message: "Goal added successfully!"
         });
     } catch (error) {
-        response.status(500).send({
-            error: "Error occurred while adding goal: " + error.message
-        });
-        console.log(error.message);
+        next(error);
     }
 };
 
-export const deleteGoal = async (request, response) => {
+export const deleteGoal = async (request, response, next) => {
     const userID = request.params.userID;
     const goalID = request.params.goalID;
 
@@ -86,9 +81,14 @@ export const deleteGoal = async (request, response) => {
             message: "Goal deleted successfully!"
         });
     } catch (error) {
-        response.status(500).send({
-            error: "Error occurred while deleting goal: " + error.message
-        });
-        console.log(error.message);
+        next(error);
     }
 };
+
+// export const updateGoal = async (request, response, next) => {
+//     try {
+        
+//     } catch (error) {
+//         next(error);
+//     }
+// };
