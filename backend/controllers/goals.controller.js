@@ -6,11 +6,9 @@ import { errorHandler } from "../errors/error.js";
 export const getGoals = async (request, response, next) => {
     const userID = request.params.userID;
 
-    console.log("Token User ID: ", request.user.id);
-    console.log("Param User ID: ", userID);
-
     if (request.user.id !== userID.toString()) {
         return response.status(403).send({
+            success: false,
             error: "Access denied. You can only view your own goals."
         });
     }
@@ -18,12 +16,14 @@ export const getGoals = async (request, response, next) => {
     try {
         const user = await User.findById(userID).select("goals");
         if (!user) {
-            return repsponse.status(404).send({
+            return response.status(404).send({
+                success: false,
                 error: "User not found."
             });
         }
 
         response.status(200).send({
+            success: true,
             goals: user.goals
         });
     } catch (error) {
@@ -35,11 +35,9 @@ export const createGoal = async (request, response) => {
     const userID = request.params.userID;
     const newGoal = request.body;
 
-    console.log("Token User ID: ", request.user.id);
-    console.log("Param User ID: ", userID);
-
     if (request.user.id !== userID.toString()) {
         return response.status(403).send({
+            success: false,
             error: "Access denied. You can only update your own goals."
         });
     }
@@ -51,6 +49,7 @@ export const createGoal = async (request, response) => {
             { new : true, useFindAndModify: false }
         );
         response.status(200).send({
+            success: true,
             message: "Goal added successfully!"
         });
     } catch (error) {
@@ -62,11 +61,9 @@ export const deleteGoal = async (request, response, next) => {
     const userID = request.params.userID;
     const goalID = request.params.goalID;
 
-    console.log("Token User ID: ", request.user.id);
-    console.log("Param User ID: ", userID);
-
     if (request.user.id !== userID.toString()) {
         return response.status(403).send({
+            success: false,
             error: "Access denied. You can only delete your own goals."
         });
     }
@@ -78,6 +75,7 @@ export const deleteGoal = async (request, response, next) => {
             { new: true, useFindAndModify: false }
         );
         response.status(200).send({
+            success: true,
             message: "Goal deleted successfully!"
         });
     } catch (error) {
