@@ -1,20 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 
 
 export default function Goals() {
-    const [showForm, setShowForm] = useState(false);
+    const [ showForm, setShowForm ] = useState(false);
     const [ error, setError ] = useState(false);
     const [ loading, setLoading ] = useState(false);
+    const [ showGoalsError, setShowGoalsError ] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
-    const [formData, setFormData] = useState({
+    const [ userGoals, setUserGoals ] = useState([]);
+    const [ formData, setFormData ] = useState({
         category: '',
         title: '',
         description: '',
         unit: '',
         completionBool: false,
     });
+
+    useEffect(() => {
+        getUserGoals();
+    }, []);
+
+    const getUserGoals = async () => {
+        try {
+            setLoading(true);
+            setShowGoalsError(false);
+            const response = await fetch(`/api/goals/get-goals/${currentUser._id}`);
+            const data = await response.json();
+            if (data.success === false) {
+                setShowGoalsError(true);
+                setLoading(false);
+                return;
+            };
+            setUserGoals(data.goals);
+            setLoading(false);
+            // console.log('Got goals.');
+            // console.log(data.goals);
+            // console.log(userGoals);
+            // console.log(userGoals.length);
+        } catch (error) {
+            setShowGoalsError(true);
+            setLoading(false);
+            console.log('Error getting user goals.');
+            console.log(error.message);
+        }
+    };
+
+    const handleDeleteGoal = async (goalId) => {
+        try {
+            const response = await fetch(`/api/goals/delete-goal/${currentUser._id}/${goalId}`, {
+                method: 'DELETE',
+            });
+            const data = await response.json();
+            if (data.success === false) {
+                console.log('Error deleting goal.');
+                console.log(data.message);
+                return;
+            } else {
+                window.location.reload(true);
+                console.log('Goal deleted successfully!');
+            }
+        } catch (error) {
+            console.log('Error deleting goal.');
+            console.log(error.message);
+        }
+    };
 
     const toggleFormVisibility = () => {
         setShowForm(!showForm);
@@ -29,9 +80,10 @@ export default function Goals() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const userID = currentUser._id;
         try {
-            const response = await fetch(`api/goals/create-goal/${userID}`, {
+            setLoading(true);
+            setError(false);
+            const response = await fetch(`api/goals/create-goal/${currentUser._id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,13 +95,23 @@ export default function Goals() {
             });
             const data = await response.json();
             setLoading(false);
-            toggleFormVisibility();
-            if (data.success === false) {
-                setError(data.message);
+            if (data.success) {
+                // Reset form data if goal creation was successful
+                setFormData({
+                    category: '',
+                    title: '',
+                    description: '',
+                    unit: '',
+                    completionBool: false
+                });
+                window.location.reload(true);
+            } else {
+                setError(true);
             }
+            toggleFormVisibility();
             console.log('Goal created successfully!');
         } catch (error) {
-            setError(error.message);
+            setError(true);
             setLoading(false);
             console.log('Error creating goal.');
         }
@@ -57,17 +119,11 @@ export default function Goals() {
 
     const handleChange = (e) => {
         if (e.target.type === 'text' ||
-            e.target.type === 'textarea') {
+            e.target.type === 'textarea' ||
+            e.target.type === 'checkbox') {
             setFormData({
                 ...formData,
                 [e.target.id]: e.target.value,
-            });
-        }
-        
-        if (e.target.id === 'completionBool') {
-            setFormData({
-                ...formData,
-                [e.target.id]: e.target.checked,
             });
         }
     };
@@ -79,9 +135,7 @@ export default function Goals() {
                 className='mb-4 bg-blue-500 test-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none'
                 type='button'
                 onClick={toggleFormVisibility}
-            >
-                {showForm ? 'Hide Form' : 'Add New Goal'}
-            </button>
+            >{showForm ? 'Hide Form' : 'Add New Goal'}</button>
             {showForm && (
                 <div className='p-3 max-w-2xl mx-auto'>
                     <h1 className='text-3xl font-semibold text-center my-7'>Create a new goal</h1>
@@ -133,6 +187,39 @@ export default function Goals() {
                             type='submit'
                             >Submit Goal</button>
                     </form>
+                </div>
+            )}
+            <p>
+                {showGoalsError ? 'There was an error, please try again.' : ''}
+            </p>
+            <p>
+                {loading ? 'Loading...' : '' }
+            </p>
+            {userGoals && (
+                <div className='mt-7 max-w-3xl gap-4 grid grid-cols-2'>
+                    {userGoals.map((goal) => (
+                        <div key={goal._id}
+                            className='border rounded-lg p-3 flex justify-between gap-4 bg-white shadow-sm hover:shadow-lg'
+                        >
+                            <div className='flex flex-col justify-between min-w-full'>
+                                <div className=''>
+                                    <p className='font-semibold text-lg'>{goal.title}</p>
+                                    <p className='text-slate-500'>{goal.category}</p>
+                                    <p className='mt-7 font-semibold'>Description:</p>
+                                    <p>{goal.description}</p>
+                                </div>
+                                <div className='mt-5 p-3 gap-4 max-w-30 flex justify-between items-center'>
+                                    <button
+                                        className='p-1 uppercase text-white rounded-lg bg-green-500 w-20'
+                                        >Edit</button>
+                                    <button
+                                        onClick={() => handleDeleteGoal(goal._id)}
+                                        className='p-1 uppercase text-white rounded-lg bg-red-500 w-20'
+                                    >Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
