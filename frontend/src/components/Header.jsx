@@ -22,6 +22,9 @@ export default function Header() {
                         <Link to='/daily-card'>
                             <li className="hidden sm:inline text-slate-800 hover:underline">Daily Card</li>
                         </Link>
+                        <Link to='/goals'>
+                            <li className="hidden sm:inline text-slate-800 hover:underline">My Goals</li>
+                        </Link>
                         <Link to='/about'>
                             <li className="hidden sm:inline text-slate-800 hover:underline">About</li>
                         </Link>
