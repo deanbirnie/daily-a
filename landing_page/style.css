@@ -1,0 +1,127 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background: transparent;
+  text-align: right;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul li {
+  padding: 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333; /* Change the color as per your design */
+}
+
+.hero {
+  height: 100%;
+  background: url("Hero.png") center center no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-text {
+  z-index: 10;
+}
+
+.hero-button {
+  padding: 10px 20px;
+  background: #f44336;
+  color: white;
+  border-radius: 5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.about {
+  background: white;
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.about img {
+  padding-right: 20px;
+  max-height: 700px;
+  min-width: 200px;
+  max-width: 75%;
+}
+.features {
+  background: white;
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.features img {
+  max-height: 700px;
+  min-width: 200px;
+  max-width: 75%;
+}
+
+.video-section {
+  text-align: center;
+  padding: 50px;
+}
+
+.video-section h2 {
+  margin-bottom: 20px;
+}
+
+.video-section iframe {
+  width: 560px;
+  height: 315px;
+}
+
+.footer p {
+  text-align: center;
+  font-size: x-small;
+}
+
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column;
+  }
+
+  .about img {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .video-section iframe {
+    width: 100%;
+  }
+}
