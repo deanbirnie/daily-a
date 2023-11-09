@@ -8,20 +8,33 @@ export default function Header() {
     return (
         <header className='bg-slate-200 shadow-md'>
             <div className='flex justify-between items-end max-w-7xl mx-auto p-3'>
-                <Link to='/'>
-                <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-                    <span className='text-[#FFE5B4]'>Daily</span>
-                    <span className='text-[#FFAD60]'>A</span>
-                </h1>
-                </Link>
+                {currentUser ? (
+                    <Link to='/daily-card'>
+                    <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
+                        <span className='text-[#FFE5B4]'>Daily</span>
+                        <span className='text-[#FFAD60]'>A</span>
+                    </h1>
+                    </Link>
+                ) : (
+                    <Link to='/'>
+                    <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
+                        <span className='text-[#FFE5B4]'>Daily</span>
+                        <span className='text-[#FFAD60]'>A</span>
+                    </h1>
+                    </Link>
+                )}
                 <nav className="flex flex-col justify-center">
                     <ul className="flex gap-4">
-                        <Link to='/daily-card'>
+                        {currentUser ? (
+                            <Link to='/daily-card'>
                             <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">daily card</li>
-                        </Link>
-                        <Link to='/goals'>
+                            </Link>
+                        ) : (<div className='hidden'></div>)}
+                        {currentUser ? (
+                            <Link to='/goals'>
                             <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">my goals</li>
-                        </Link>
+                            </Link>
+                        ) : (<div className='hidden'></div>)}
                         <div></div>
                         <div>
                             <Link to='/profile'>
