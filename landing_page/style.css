@@ -6,9 +6,16 @@ html {
   font-family: Arial, sans-serif;
 }
 
+header {
+    top: 0;
+    position: sticky;
+    background: transparent;
+}
 nav {
   background: transparent;
   text-align: right;
+  top: 0;
+  position: sticky;
 }
 
 nav ul {
@@ -30,7 +37,7 @@ nav ul li a {
 
 .hero {
   height: 100%;
-  background: url("Hero.png") center center no-repeat;
+  background: url("images/Hero-min.png") center center no-repeat;
   background-size: cover;
   position: relative;
   display: flex;

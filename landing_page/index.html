@@ -9,15 +9,15 @@
     <header>
         <nav>
             <ul>
-                <li>Features</li>
-                <li>About</li>
-                <li>Watch</li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#video">Watch</a></li>
             </ul>
         </nav>
     </header>
     <body>
 
-        <div class="hero">
+        <div class="hero" id="hero">
             <div class="overlay"></div>
             <div class="hero-text">
                 <h1>Daily A</h1>
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="features">
+        <div class="features" id="features">
             <div>
                 <h2>Features</h2>
                 <p>
@@ -41,18 +41,27 @@
                     <li>Look back at past performance to see how far you've come.</li>
                 </ul>
             </div>
-            <img src="MyGoals.png" alt="About image">
+            <img src="./images/MyGoals.png" alt="About image">
         </div>
 
-        <div class="about">
-            <img src="dean-web-profile.jpg" alt="About image">
+        <div class="about" id="about">
+            <img src="./images/dean-web-profile.jpg" alt="About image">
             <div>
                 <h2>About</h2>
-                <p>Here is a simple description about your application and how it helps users to achieve their goals.</p>
+                <p>
+                    I came up with the idea after trying to find something that would help motivate me enough
+                    to stick to my goals. I had no problem setting goals but soon after they'd fall by the wayside.
+                    I wanted to make something that would force me to engage with them at the start of every day
+                    and then rate my performance over time. It's more the constant engagement that helps you than
+                    actually keeping track of your goals. If you're interested in following the development you can
+                    check out the GitHub repository below. Follow me on LinkedIn if you'd like to connect.
+                </p>
+                <p>My <span><a href="https://github.com/deanbirnie/daily-a">GitHub</a></span> repository.</p>
+                <p>My <span><a href="https://www.linkedin.com/in/dean-birnie/">LinkedIn</a></span> profile.</p>
             </div>
         </div>
 
-        <div class="video-section">
+        <div class="video-section" id="video">
             <h2>Behind the code</h2>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/MEkaqZecpUQ?si=W4uWruGcBL9q67nW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
