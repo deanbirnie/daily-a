@@ -14,27 +14,34 @@ export default function Header() {
                     <span className='text-[#FFAD60]'>A</span>
                 </h1>
                 </Link>
-                <nav>
+                <nav className="flex flex-col justify-center">
                     <ul className="flex gap-4">
-                        <Link to='/'>
-                            <li className="hidden sm:inline text-slate-800 hover:underline">Landing Page</li>
-                        </Link>
                         <Link to='/daily-card'>
-                            <li className="hidden sm:inline text-slate-800 hover:underline">Daily Card</li>
+                            <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">daily card</li>
                         </Link>
                         <Link to='/goals'>
-                            <li className="hidden sm:inline text-slate-800 hover:underline">My Goals</li>
+                            <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">my goals</li>
                         </Link>
-                        <Link to='/about'>
-                            <li className="hidden sm:inline text-slate-800 hover:underline">About</li>
-                        </Link>
-                        <Link to='/profile'>
+                        <div></div>
+                        <div>
+                            <Link to='/profile'>
+                            {currentUser ? (
+                                <img className="rounded-full h-7 w-7 object-cover hover:opacity-80" src={ currentUser.profilePhoto } alt='profile' />
+                            ) : (
+                                <li className="sm:inline text-slate-800 hover:underline">sign in</li>
+                                )}
+                            </Link>
+                        </div>
                         {currentUser ? (
-                            <img className="rounded-full h-7 w-7 object-cover" src={ currentUser.profilePhoto } alt='profile' />
+                            <div className="hidden"></div>
                         ) : (
-                            <li className="sm:inline text-slate-800 hover:underline">Sign In</li>
-                            )}
-                        </Link>
+                        <div className="flex">
+                            <p>|</p>
+                            <Link to='/profile'>        
+                                <li className="ml-4 sm:inline text-slate-800 hover:underline">sign up</li>
+                            </Link>
+                        </div>
+                        )}
                     </ul>
                 </nav>
             </div>
