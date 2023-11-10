@@ -26,11 +26,13 @@ export default function Header() {
         <nav className="flex flex-col justify-center">
           <ul className="flex gap-4">
             {currentUser ? (
-                <div className="hidden"></div>
+              <div className="hidden"></div>
             ) : (
-                <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">
-                <a href="http://127.0.0.1:5500/landing_page/index.html">DailyA</a>
-                </li>
+              <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">
+                <a href="http://127.0.0.1:5500/landing_page/index.html">
+                  DailyA
+                </a>
+              </li>
             )}
             {currentUser ? (
               <Link to="/daily-card">
@@ -61,7 +63,7 @@ export default function Header() {
                   />
                 ) : (
                   <li className="sm:inline text-slate-800 hover:underline">
-                    sign in
+                    Sign In
                   </li>
                 )}
               </Link>
@@ -73,7 +75,7 @@ export default function Header() {
                 <p>|</p>
                 <Link to="/sign-up">
                   <li className="ml-4 sm:inline text-slate-800 hover:underline">
-                    sign up
+                    Sign Up
                   </li>
                 </Link>
               </div>
