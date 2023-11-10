@@ -16,7 +16,7 @@ export default function Header() {
             </h1>
           </Link>
         ) : (
-          <Link to="/">
+          <Link to="http://127.0.0.1:5500/landing_page/index.html">
             <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
               <span className="text-orange-600">Daily</span>
               <span className="text-orange-700">A</span>
@@ -25,6 +25,13 @@ export default function Header() {
         )}
         <nav className="flex flex-col justify-center">
           <ul className="flex gap-4">
+            {currentUser ? (
+                <div className="hidden"></div>
+            ) : (
+                <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">
+                <a href="http://127.0.0.1:5500/landing_page/index.html">DailyA</a>
+                </li>
+            )}
             {currentUser ? (
               <Link to="/daily-card">
                 <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">
@@ -64,7 +71,7 @@ export default function Header() {
             ) : (
               <div className="flex">
                 <p>|</p>
-                <Link to="/profile">
+                <Link to="/sign-up">
                   <li className="ml-4 sm:inline text-slate-800 hover:underline">
                     sign up
                   </li>
