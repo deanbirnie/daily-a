@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 // import { useState } from "react";
+import Typed from "react-typed";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -16,7 +17,7 @@ export default function Header() {
             </h1>
           </Link>
         ) : (
-          <Link to="http://127.0.0.1:5500/landing_page/index.html">
+          <Link to="/">
             <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
               <span className="text-orange-600">Daily</span>
               <span className="text-orange-700">A</span>
@@ -29,7 +30,7 @@ export default function Header() {
               <div className="hidden"></div>
             ) : (
               <li className="sm:inline text-slate-800 hover:underline hover:opacity-70">
-                <a href="http://127.0.0.1:5500/landing_page/index.html">
+                <a href="/">
                   DailyA
                 </a>
               </li>
