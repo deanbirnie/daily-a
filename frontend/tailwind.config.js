@@ -14,7 +14,7 @@ export default {
     //   'twilight-purple': '#6B2737',
     //   'neutral-off-white': '#FFF8F0'
     // },
-    extend: {},
+    extend: {}
   },
   plugins: [],
 }
