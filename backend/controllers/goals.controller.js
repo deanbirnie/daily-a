@@ -1,7 +1,6 @@
 // import { scorecard } from "../models/scorecard.model.js";
 import { User } from "../models/user.model.js";
 import { errorHandler } from "../errors/error.js";
-import e from "express";
 
 export const getGoals = async (request, response, next) => {
   const userID = request.params.userID;

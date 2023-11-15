@@ -6,7 +6,7 @@ const goalSchema = new Schema({
     title: String,
     description: String,
     unit: String,
-    completionBool: Boolean
+    completionBool: Boolean,
 });
 
 const userSchema = new Schema(

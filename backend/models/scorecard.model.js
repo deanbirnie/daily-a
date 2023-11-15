@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const scorecardSchema = new Schema({
-    date: Date,
+    date: {
+        type: Date,
+        unique: true,
+    },
     goalSelected: [{
         goalID: { type: ObjectId, ref: 'User.goals' },
         value: Number
