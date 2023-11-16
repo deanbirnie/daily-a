@@ -1,2 +1,4 @@
 # ignore config file with secrets
 app.config.js
+
+node_modules
