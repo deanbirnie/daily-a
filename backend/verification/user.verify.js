@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../app.config.js';
 import { errorHandler } from "../errors/error.js";
 
 export const tokenVerification = (request, response, next) => {
@@ -12,7 +11,7 @@ export const tokenVerification = (request, response, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // console.log("Decoded Token: ", decoded);
         request.user = decoded;
         next();
@@ -20,5 +19,3 @@ export const tokenVerification = (request, response, next) => {
         next(error);
     }
 };
-
-// export default tokenVerification;

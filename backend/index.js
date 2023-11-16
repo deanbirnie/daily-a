@@ -1,15 +1,13 @@
 import express from "express";
-import { PORT, mongodbURL } from "./app.config.js";
 import authRouter from "./routes/auth.route.js";
 import goalsRouter from "./routes/goals.route.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import path from "path";
+import dotenv from "dotenv";
 
 
-// import dotenv from "dotenv";
-
-// dotenv.config();
+dotenv.config();
 
 const __dirname = path.resolve();
 
@@ -58,11 +56,11 @@ app.use((error, request, response, next) => {
 
 // mongoose handles DB connection, only listens on port if DB connection succeeds
 mongoose
-    .connect(mongodbURL)
+    .connect(process.env.MONGO_DB_URL)
     .then(() => {
         console.log('App connected to database.');
-        app.listen(PORT, () => {
-            console.log(`App is listening on port: ${PORT}`);
+        app.listen(5555, () => {
+            console.log('App is listening on port: 5555');
         });
     })
     .catch((error) => {

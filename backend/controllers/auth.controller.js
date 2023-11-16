@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../app.config.js";
 import { errorHandler } from '../errors/error.js';
 
 
@@ -14,7 +13,7 @@ export const registerUser = async (request, response, next) => {
         email,
         passwordHash: hashedPassword
     });
-    try{
+    try {
         await newUser.save();
         response.status(201).json('User successfully registered.');
     } catch (error) {
@@ -30,7 +29,7 @@ export const signIn = async (request, response, next) => {
         if (!isValidUser) return next(errorHandler(404, 'User not found.'));
         const isValidPassword = bcrypt.compareSync(password, isValidUser.passwordHash);
         if (!isValidPassword) return next(errorHandler(401, 'Incorrect email or password.'));
-        const userToken = jwt.sign({ id: isValidUser._id.toString() }, JWT_SECRET);
+        const userToken = jwt.sign({ id: isValidUser._id.toString() }, process.env.JWT_SECRET);
         // destructuring to remove password hash so it is not returned in response
         const { passwordHash: passwdHash, ...userInfo } = isValidUser._doc;
         response
@@ -46,7 +45,7 @@ export const signInGoogle = async (request, response, next) => {
     try {
         const user = await User.findOne({ email: request.body.email });
         if (user) {
-            const userToken = jwt.sign({ id: user._id }, JWT_SECRET);
+            const userToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { passwordHash: passwdHash, ...userInfo } = user._doc;
             response
                 .cookie("access_token", userToken, { httpOnly: true })
@@ -64,7 +63,7 @@ export const signInGoogle = async (request, response, next) => {
                 profilePhoto: request.body.photo
             });
             await newUser.save();
-            const userToken = jwt.sign({ id: newUser._id.toString() }, JWT_SECRET);
+            const userToken = jwt.sign({ id: newUser._id.toString() }, process.env.JWT_SECRET);
             const { passwordHash: passwdHash, ...userInfo } = newUser._doc;
             response
                 .cookie("access_token", userToken, { httpOnly: true })
