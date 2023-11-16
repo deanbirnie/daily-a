@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "cd backend && npm start",
-    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
