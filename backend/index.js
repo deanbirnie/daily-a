@@ -4,11 +4,14 @@ import authRouter from "./routes/auth.route.js";
 import goalsRouter from "./routes/goals.route.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 
 // import dotenv from "dotenv";
 
 // dotenv.config();
+
+const __dirname = path.resolve();
 
 const app = express();
 
@@ -31,6 +34,16 @@ app.use('/api/auth', authRouter);
 
 // goals routes
 app.use("/api/goals", goalsRouter);
+
+
+// set static directory for build for deploying application
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+
+// serve index.html from frontend file for all routes
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 // middleware for handling errors
 app.use((error, request, response, next) => {
