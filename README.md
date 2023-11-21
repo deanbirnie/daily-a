@@ -11,3 +11,9 @@ Daily A is a web application created by Dean Birnie as a portfolio project for t
 For this project I have opted for the tried and tested MERN stack. These technologies are relatively new to me and so using them for this project gives me a great opportunity to learn them and add them to my arsenal. MongoDB is a fantastic data storage option and offers a degree of flexibility that isn't found in traditional relational database software. It interfaces extremely well with the rest of the stack.
 
 JavaScript in general is such a wonderful technology to use in the creation of web applications and libraries like ExpressJS, NodeJS and ReactJS (the other components in the stack) just extend its functionality evven further.
+
+## Features:
+
+- Sign up using your own credentials or use your Google account to make the process much faster.
+- Create, edit and delete goals.
+- Add goals you want to focus on to your dailly planner to make them
